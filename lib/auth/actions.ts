@@ -17,9 +17,9 @@ export async function authenticate(
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return "Invalid credentials.";
+          return "잘못된 비밀번호입니다. 다시 확인하세요.";
         default:
-          return "Something went wrong.";
+          return "서버 에러 - 다시 시도해주세요.";
       }
     }
     throw error;

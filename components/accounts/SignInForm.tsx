@@ -62,7 +62,10 @@ type ButtonProps = {
 
 export function Button({ children, ...props }: ButtonProps) {
   return (
-    <button className="bg-blue-700 py-1 rounded-md cursor-pointer" {...props}>
+    <button
+      className="bg-blue-700 py-1 rounded-md cursor-pointer disabled:cursor-default disabled:opacity-80"
+      {...props}
+    >
       {children}
     </button>
   );
