@@ -8,7 +8,7 @@ type SignInFormProps = {
 
 export default function Form({ children, action, mode }: SignInFormProps) {
   const containerStyles =
-    "border border-slate-700 flex flex-col items-center p-10 w-xs";
+    "border border-(--border) flex flex-col items-center p-10 w-xs";
 
   return (
     <div className="flex flex-col gap-5">

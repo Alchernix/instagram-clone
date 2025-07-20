@@ -1,4 +1,12 @@
-import type { NextAuthConfig } from "next-auth";
+import type { DefaultSession, NextAuthConfig } from "next-auth";
+
+// declare module "next-auth" {
+//   interface Session extends DefaultSession {
+//     user: DefaultSession["user"] & {
+//       id: number;
+//     };
+//   }
+// }
 
 export const authConfig = {
   pages: {
@@ -21,6 +29,16 @@ export const authConfig = {
       }
       return true;
     },
+    async session({ session, token, user }) {
+      session.user.id = token.sub || "";
+      return session;
+    },
+    // async jwt({ token, user, account }) {
+    //   if (user) {
+    //     token.user = user;
+    //   }
+    //   return token;
+    // },
   },
   providers: [],
 } satisfies NextAuthConfig;

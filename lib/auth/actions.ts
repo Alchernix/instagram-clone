@@ -1,6 +1,6 @@
 "use server";
 
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
 import { AuthError } from "next-auth";
 import { prisma } from "@/lib/prisma";
 import { FormSchema } from "./schema";
@@ -83,4 +83,8 @@ export async function signUp(prevState: State, formData: FormData) {
   redirect("/");
 
   return prevState; // 에러 방지용
+}
+
+export async function signOutAction() {
+  await signOut({ redirectTo: "/" });
 }

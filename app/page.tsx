@@ -1,4 +1,4 @@
-import Sidebar from "@/components/accounts/Sidebar";
+import Sidebar from "@/components/Sidebar";
 
 export default function Page() {
   return (

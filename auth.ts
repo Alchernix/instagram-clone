@@ -5,16 +5,13 @@ import { z } from "zod";
 import bcrypt from "bcrypt";
 import { prisma } from "@/lib/prisma";
 
-declare module "next-auth" {
-  interface User {
-    // NextAuth 기본 User의 id: string → number 로 재정의
-    id: number;
-    // (필요하다면 email, name, image 등도 재선언)
-  }
-  interface Session {
-    user: User;
-  }
-}
+// declare module "next-auth" {
+//   interface User {
+//     // NextAuth 기본 User의 id: string → number 로 재정의
+//     id: number;
+//     // (필요하다면 email, name, image 등도 재선언)
+//   }
+// }
 
 async function getUser(handle: string) {
   try {
@@ -28,7 +25,7 @@ async function getUser(handle: string) {
   }
 }
 
-export const { auth, signIn, signOut } = NextAuth({
+export const { auth, signIn, signOut, handlers } = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
@@ -42,8 +39,11 @@ export const { auth, signIn, signOut } = NextAuth({
           const user = await getUser(handle);
           if (!user) return null;
           const passwordsMatch = await bcrypt.compare(password, user.password);
-
-          if (passwordsMatch) return user;
+          const newUser = {
+            ...user,
+            id: user.id.toString(),
+          }; // string으로 바꿔서 처리
+          if (passwordsMatch) return newUser;
         }
         console.log("Invalid credentials");
         return null;
