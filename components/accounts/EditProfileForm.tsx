@@ -5,8 +5,9 @@ import { Input } from "@/components/accounts/EditComponents";
 import type { User } from "@/app/generated/prisma";
 import { useState } from "react";
 import { FormSchema } from "@/lib/user/schema";
-import { useActionState } from "react";
+import { useActionState, useRef } from "react";
 import { CameraIcon } from "../Icons";
+import { CldUploadWidget } from "next-cloudinary";
 
 interface FormProps {
   currentUser: User;
@@ -61,16 +62,43 @@ export default function Form({ currentUser, action }: FormProps) {
   const hasErrors = Object.values(errors).some((msg) => Boolean(msg));
   const isSubmitDisabled = isPending || hasErrors;
 
+  const uploadRef = useRef<HTMLButtonElement | null>(null);
+  const [uploadedUrl, setUploadedUrl] = useState("");
+
+  function handleSuccess(results: any) {
+    setUploadedUrl(results.info.url);
+  }
+
   return (
     <form
       action={formAction}
       className="flex flex-col gap-7 w-full self-center text-base"
     >
       <div className="relative w-[150px] self-center">
-        <ProfileImg url={currentUser.profileImg} size={150} />
-        <div className="absolute top-25 left-25 bg-(--foreground) rounded-full overflow-hidden cursor-pointer">
+        <ProfileImg url={uploadedUrl || currentUser.profileImg} size={150} />
+        <div
+          className="absolute top-25 left-25 bg-(--foreground) rounded-full overflow-hidden cursor-pointer hover:bg-slate-200"
+          // @ts-ignore
+          onClick={() => uploadRef.current?.()}
+        >
           <CameraIcon />
         </div>
+        <CldUploadWidget
+          uploadPreset="w38siez2"
+          options={{
+            cropping: true,
+            multiple: false,
+            croppingAspectRatio: 1,
+            showSkipCropButton: false,
+          }}
+          onSuccess={(results) => handleSuccess(results)}
+        >
+          {({ open }) => {
+            // @ts-ignore
+            uploadRef.current = open; // open() 보관
+            return null; // UI는 우리가 만든 버튼 사용
+          }}
+        </CldUploadWidget>
       </div>
       <Input
         name="handle"
@@ -131,6 +159,7 @@ export default function Form({ currentUser, action }: FormProps) {
         }}
         error={!isEditing ? errors.website : ""}
       />
+      <input type="hidden" name="profileImg" value={uploadedUrl} />
       <Button disabled={isSubmitDisabled}>제출</Button>
     </form>
   );

@@ -51,6 +51,8 @@ export async function updateUserAction(prevState: {}, formData: FormData) {
   const name = formData.get("name")?.toString()!;
   const bio = formData.get("bio")?.toString() || "";
   const website = formData.get("website")?.toString() || "";
+  const profileImg = formData.get("profileImg")?.toString() || "";
+  console.log(profileImg);
 
   const user = await getUserById(id);
   const newUser = {
@@ -61,6 +63,10 @@ export async function updateUserAction(prevState: {}, formData: FormData) {
     bio,
     website,
   } as User;
+
+  if (profileImg) {
+    newUser.profileImg = profileImg;
+  }
 
   await updateUser(Number(id), newUser);
   redirect(`/${handle}`);
