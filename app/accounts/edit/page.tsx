@@ -5,6 +5,7 @@ import { getUserById } from "@/server/actions/user";
 import { auth } from "@/auth";
 import { notFound } from "next/navigation";
 import Form from "@/components/accounts/EditProfileForm";
+import { updateUserAction } from "@/server/actions/user";
 
 export default async function Page() {
   const session = await auth();
@@ -22,7 +23,7 @@ export default async function Page() {
       <div className="flex-1 w-full overflow-auto">
         <div className="flex flex-col gap-10 w-full max-w-3xl min-w-0 mx-auto py-10 px-5">
           <div className="font-bold text-lg">프로필 편집</div>
-          <Form currentUser={currentUser} />
+          <Form currentUser={currentUser} action={updateUserAction} />
         </div>
       </div>
     </div>
