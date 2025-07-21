@@ -3,7 +3,7 @@ import { authConfig } from "./auth.config";
 import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
 import bcrypt from "bcrypt";
-import { prisma } from "@/lib/prisma";
+import { getUserByHandle } from "@/server/actions/user";
 
 // declare module "next-auth" {
 //   interface User {
@@ -12,18 +12,6 @@ import { prisma } from "@/lib/prisma";
 //     // (필요하다면 email, name, image 등도 재선언)
 //   }
 // }
-
-async function getUser(handle: string) {
-  try {
-    const user = await prisma.user.findUnique({
-      where: { handle },
-    });
-    return user;
-  } catch (error) {
-    console.error("Failed to fetch user");
-    throw new Error("Failed to fetch user.");
-  }
-}
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
   ...authConfig,
@@ -36,7 +24,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
 
         if (parsedCredentials.success) {
           const { handle, password } = parsedCredentials.data;
-          const user = await getUser(handle);
+          const user = await getUserByHandle(handle);
           if (!user) return null;
           const passwordsMatch = await bcrypt.compare(password, user.password);
           const newUser = {

@@ -3,8 +3,8 @@
 import Form from "@/components/accounts/SignInForm";
 import { Input, Button } from "@/components/accounts/SignInForm";
 import { useActionState, useState } from "react";
-import { signUp } from "@/lib/auth/actions";
-import type { State } from "@/lib/auth/actions";
+import { signUp } from "@/server/actions/auth";
+import type { State } from "@/server/actions/auth";
 import { useSearchParams } from "next/navigation";
 import { FormSchema } from "@/lib/auth/schema";
 

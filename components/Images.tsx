@@ -7,11 +7,15 @@ type ProfileImgProps = {
 
 export function ProfileImg({ url, size }: ProfileImgProps) {
   return (
-    <div className={`w-[${size}px] aspect-square rounded-full relative`}>
+    <div
+      className={`w-[${size}px] max-w-[${size}px] aspect-square rounded-full overflow-hidden relative`}
+    >
       <Image
         className="w-full h-full object-cover"
         src={url}
         alt="profile image"
+        width={size}
+        height={size}
       ></Image>
     </div>
   );

@@ -35,7 +35,7 @@ export const authConfig = {
     },
     // async jwt({ token, user, account }) {
     //   if (user) {
-    //     token.user = user;
+    //     console.log(user);
     //   }
     //   return token;
     // },

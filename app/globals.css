@@ -15,6 +15,8 @@ body {
   --background: oklch(12.9% 0.042 264.695);
   --foreground: oklch(98.4% 0.003 247.858);
   --border: oklch(37.2% 0.044 257.287);
+  --light-text: oklch(55.4% 0.046 257.417);
+  --highlight-blue: oklch(54.6% 0.245 262.881);
 }
 
 /* @theme inline {

@@ -2,8 +2,8 @@
 
 import { signIn, signOut } from "@/auth";
 import { AuthError } from "next-auth";
-import { prisma } from "@/lib/prisma";
-import { FormSchema } from "./schema";
+import { prisma } from "@/server/db";
+import { FormSchema } from "@/lib/auth/schema";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 

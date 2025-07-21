@@ -3,7 +3,7 @@
 import Form from "@/components/accounts/SignInForm";
 import { Input, Button } from "@/components/accounts/SignInForm";
 import { useActionState, useState } from "react";
-import { authenticate } from "@/lib/auth/actions";
+import { authenticate } from "@/server/actions/auth";
 import { useSearchParams } from "next/navigation";
 
 export default function Page() {
