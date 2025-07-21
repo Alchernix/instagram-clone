@@ -7,7 +7,12 @@ import { notFound } from "next/navigation";
 import { auth } from "@/auth";
 import Link from "next/link";
 import { Button, InfoItem, TapItem } from "@/components/user-page/UserPage";
-import { PostsIcon, BookMarkIcon, CameraIcon } from "@/components/Icons";
+import {
+  PostsIcon,
+  BookMarkIcon,
+  CameraWithCircleIcon,
+  LinkIcon,
+} from "@/components/Icons";
 
 export default async function Page({
   params,
@@ -52,8 +57,18 @@ export default async function Page({
               <InfoItem label="팔로우" count={0} />
               <InfoItem label="팔로워" count={0} />
             </ul>
-            <div className="font-bold">{user.name}</div>
-            <div>{user.bio}</div>
+            <div>
+              <div className="font-bold">{user.name}</div>
+              <div>{user.bio}</div>
+              {user.website && (
+                <div className="flex gap-1 items-center">
+                  <LinkIcon />
+                  <a className="font-bold hover:underline" href={user.website}>
+                    {user.website}
+                  </a>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className="flex-1 w-full max-w-3xl min-w-0 mx-auto flex flex-col">
@@ -68,7 +83,7 @@ export default async function Page({
             )}
           </div>
           <div className="flex-1 flex flex-col items-center justify-center gap-7">
-            <CameraIcon />
+            <CameraWithCircleIcon />
             <p className="font-bold text-2xl">게시물 없음</p>
           </div>
         </div>

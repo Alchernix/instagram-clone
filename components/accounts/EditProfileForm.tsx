@@ -6,6 +6,8 @@ import type { User } from "@/app/generated/prisma";
 import { useState } from "react";
 import { FormSchema } from "@/lib/user/schema";
 import { useActionState } from "react";
+import { CameraIcon } from "../Icons";
+
 interface FormProps {
   currentUser: User;
   action: (prevState: {}, formData: FormData) => Promise<void>;
@@ -64,8 +66,11 @@ export default function Form({ currentUser, action }: FormProps) {
       action={formAction}
       className="flex flex-col gap-7 w-full self-center text-base"
     >
-      <div className="w-[150px] self-center">
+      <div className="relative w-[150px] self-center">
         <ProfileImg url={currentUser.profileImg} size={150} />
+        <div className="absolute top-25 left-25 bg-(--foreground) rounded-full overflow-hidden cursor-pointer">
+          <CameraIcon />
+        </div>
       </div>
       <Input
         name="handle"

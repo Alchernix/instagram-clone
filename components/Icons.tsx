@@ -166,7 +166,7 @@ export function BookMarkIcon() {
   );
 }
 
-export function CameraIcon() {
+export function CameraWithCircleIcon() {
   return (
     <svg
       fill="currentColor"
@@ -175,7 +175,6 @@ export function CameraIcon() {
       viewBox="0 0 96 96"
       width="62"
     >
-      <title>카메라</title>
       <circle
         cx="48"
         cy="48"
@@ -202,6 +201,62 @@ export function CameraIcon() {
         strokeLinejoin="round"
         strokeWidth="2"
       ></path>
+    </svg>
+  );
+}
+
+export function CameraIcon() {
+  return (
+    <svg
+      fill="var(--background)"
+      height="62"
+      role="img"
+      viewBox="0 0 96 96"
+      width="62"
+    >
+      <ellipse
+        cx="48.002"
+        cy="49.524"
+        fill="none"
+        rx="10.444"
+        ry="10.476"
+        stroke="var(--background)"
+        strokeLinejoin="round"
+        strokeWidth="2.095"
+      ></ellipse>
+      <path
+        d="M63.994 69A8.02 8.02 0 0 0 72 60.968V39.456a8.023 8.023 0 0 0-8.01-8.035h-1.749a4.953 4.953 0 0 1-4.591-3.242C56.61 25.696 54.859 25 52.469 25h-8.983c-2.39 0-4.141.695-5.181 3.178a4.954 4.954 0 0 1-4.592 3.242H32.01a8.024 8.024 0 0 0-8.012 8.035v21.512A8.02 8.02 0 0 0 32.007 69Z"
+        fill="none"
+        stroke="var(--background)"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      ></path>
+    </svg>
+  );
+}
+
+export function LinkIcon() {
+  return (
+    <svg fill="currentColor" height="12" viewBox="0 0 24 24" width="12">
+      <path
+        d="m9.726 5.123 1.228-1.228a6.47 6.47 0 0 1 9.15 9.152l-1.227 1.227m-4.603 4.603-1.228 1.228a6.47 6.47 0 0 1-9.15-9.152l1.227-1.227"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      ></path>
+      <line
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        x1="8.471"
+        x2="15.529"
+        y1="15.529"
+        y2="8.471"
+      ></line>
     </svg>
   );
 }
