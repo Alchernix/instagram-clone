@@ -5,6 +5,7 @@ import { ProfileImg } from "@/components/Images";
 import { getUserByHandle } from "@/server/actions/user";
 import { notFound } from "next/navigation";
 import { auth } from "@/auth";
+import Link from "next/link";
 import { Button, InfoItem, TapItem } from "@/components/user-page/UserPage";
 import { PostsIcon, BookMarkIcon, CameraIcon } from "@/components/Icons";
 
@@ -40,7 +41,9 @@ export default async function Page({
                 </>
               ) : (
                 <>
-                  <Button classes="bg-(--border)">프로필 편집</Button>
+                  <Link href="/accounts/edit">
+                    <Button classes="bg-(--border)">프로필 편집</Button>
+                  </Link>
                 </>
               )}
             </div>

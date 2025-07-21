@@ -27,13 +27,19 @@ export default async function Sidebar() {
   return (
     <aside className="h-full w-[70px] md:w-[220px] bg-inherit px-3 md:px-5 py-10 flex flex-col items-center border-r border-(--border)">
       <div className="hidden md:block mb-10">
-        <InstagramLogo size={100} />
+        <Link href="/">
+          <InstagramLogo size={100} />
+        </Link>
       </div>
       <div className="md:hidden mb-10">
-        <InstagramIcon />
+        <Link href="/">
+          <InstagramIcon />
+        </Link>
       </div>
       <ul className="w-full text-base flex flex-col gap-3">
-        <ListItem icon={<HomeIcon />} label="홈" />
+        <Link href="/">
+          <ListItem icon={<HomeIcon />} label="홈" />
+        </Link>
         <ListItem icon={<SearchIcon />} label="검색" />
         <ListItem icon={<DirectIcon />} label="메시지" />
         <ListItem icon={<HeartIcon />} label="알림" />

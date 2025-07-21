@@ -31,5 +31,9 @@ export function InfoItem({ label, count }: InfoItemProps) {
 }
 
 export function TapItem({ children }: { children: React.ReactNode }) {
-  return <div className="flex-1 flex justify-center py-3">{children}</div>;
+  return (
+    <div className="flex-1 flex justify-center py-3 cursor-pointer">
+      {children}
+    </div>
+  );
 }
