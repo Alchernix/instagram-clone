@@ -103,3 +103,105 @@ export function HeartIcon() {
     </svg>
   );
 }
+
+export function PostsIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2px"
+        d="M3 3H21V21H3z"
+      ></path>
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2px"
+        d="M9.01486 3 9.01486 21"
+      ></path>
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2px"
+        d="M14.98514 3 14.98514 21"
+      ></path>
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2px"
+        d="M21 9.01486 3 9.01486"
+      ></path>
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2px"
+        d="M21 14.98514 3 14.98514"
+      ></path>
+    </svg>
+  );
+}
+
+export function BookMarkIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2px"
+        d="M20 21 12 13.44 4 21 4 3 20 3 20 21z"
+      ></path>
+    </svg>
+  );
+}
+
+export function CameraIcon() {
+  return (
+    <svg
+      fill="currentColor"
+      height="62"
+      role="img"
+      viewBox="0 0 96 96"
+      width="62"
+    >
+      <title>카메라</title>
+      <circle
+        cx="48"
+        cy="48"
+        fill="none"
+        r="47"
+        stroke="currentColor"
+        strokeMiterlimit="10"
+        strokeWidth="2"
+      ></circle>
+      <ellipse
+        cx="48.002"
+        cy="49.524"
+        fill="none"
+        rx="10.444"
+        ry="10.476"
+        stroke="currentColor"
+        strokeLinejoin="round"
+        strokeWidth="2.095"
+      ></ellipse>
+      <path
+        d="M63.994 69A8.02 8.02 0 0 0 72 60.968V39.456a8.023 8.023 0 0 0-8.01-8.035h-1.749a4.953 4.953 0 0 1-4.591-3.242C56.61 25.696 54.859 25 52.469 25h-8.983c-2.39 0-4.141.695-5.181 3.178a4.954 4.954 0 0 1-4.592 3.242H32.01a8.024 8.024 0 0 0-8.012 8.035v21.512A8.02 8.02 0 0 0 32.007 69Z"
+        fill="none"
+        stroke="currentColor"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      ></path>
+    </svg>
+  );
+}

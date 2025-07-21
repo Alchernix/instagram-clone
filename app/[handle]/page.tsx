@@ -5,7 +5,8 @@ import { ProfileImg } from "@/components/Images";
 import { getUserByHandle } from "@/server/actions/user";
 import { notFound } from "next/navigation";
 import { auth } from "@/auth";
-import { Button, InfoItem } from "@/components/user-page/UserPage";
+import { Button, InfoItem, TapItem } from "@/components/user-page/UserPage";
+import { PostsIcon, BookMarkIcon, CameraIcon } from "@/components/Icons";
 
 export default async function Page({
   params,
@@ -19,19 +20,20 @@ export default async function Page({
   }
   const session = await auth();
   const currentUserId = Number(session?.user?.id);
+  const isMyAccount = !(!currentUserId || currentUserId !== user.id);
 
   return (
     <div className="h-full flex">
       {currentUserId && <Sidebar />}
-      <div className="flex-1 flex-col items-center">
-        <div className="grid grid-cols-[1fr_2fr] max-w-3xl mx-auto py-10 px-5">
-          <div className="justify-self-center">
+      <div className="flex-1 flex flex-col">
+        <div className="grid grid-cols-[1fr_2fr] w-full max-w-3xl min-w-0 mx-auto py-10 px-5">
+          <div className="justify-self-center w-[150px]">
             <ProfileImg url={user.profileImg} size={150} />
           </div>
           <div className="flex flex-col gap-5">
             <div className="flex gap-2">
               <div className="font-bold text-base mr-3">{user.handle}</div>
-              {!currentUserId || currentUserId !== user.id ? (
+              {!isMyAccount ? (
                 <>
                   <Button classes="bg-(--highlight-blue)">팔로우</Button>
                   <Button classes="bg-(--border)">메시지 보내기</Button>
@@ -51,7 +53,22 @@ export default async function Page({
             <div>{user.bio}</div>
           </div>
         </div>
-        <div className="flex-1">Test</div>
+        <div className="flex-1 w-full max-w-3xl min-w-0 mx-auto flex flex-col">
+          <div className="border-b border-(--border) flex">
+            <TapItem>
+              <PostsIcon />
+            </TapItem>
+            {isMyAccount && (
+              <TapItem>
+                <BookMarkIcon />
+              </TapItem>
+            )}
+          </div>
+          <div className="flex-1 flex flex-col items-center justify-center gap-7">
+            <CameraIcon />
+            <p className="font-bold text-2xl">게시물 없음</p>
+          </div>
+        </div>
       </div>
     </div>
   );

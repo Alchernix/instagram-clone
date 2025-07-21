@@ -29,3 +29,7 @@ export function InfoItem({ label, count }: InfoItemProps) {
     </li>
   );
 }
+
+export function TapItem({ children }: { children: React.ReactNode }) {
+  return <div className="flex-1 flex justify-center py-3">{children}</div>;
+}
