@@ -6,13 +6,10 @@ import { getUserByHandle } from "@/server/actions/user";
 import { notFound } from "next/navigation";
 import { auth } from "@/auth";
 import Link from "next/link";
+import { Posts, PostsSkeleton } from "@/components/posts/Posts";
+import { Suspense } from "react";
 import { Button, InfoItem, TapItem } from "@/components/user-page/UserPage";
-import {
-  PostsIcon,
-  BookMarkIcon,
-  CameraWithCircleIcon,
-  LinkIcon,
-} from "@/components/Icons";
+import { PostsIcon, BookMarkIcon, LinkIcon } from "@/components/Icons";
 
 export default async function Page({
   params,
@@ -82,10 +79,9 @@ export default async function Page({
               </TapItem>
             )}
           </div>
-          <div className="flex-1 flex flex-col items-center justify-center gap-7">
-            <CameraWithCircleIcon />
-            <p className="font-bold text-2xl">게시물 없음</p>
-          </div>
+          <Suspense fallback={<PostsSkeleton />}>
+            <Posts handle={handle} />
+          </Suspense>
         </div>
       </div>
     </div>
