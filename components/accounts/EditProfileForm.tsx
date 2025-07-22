@@ -60,7 +60,7 @@ export default function Form({ currentUser, action }: FormProps) {
   }
 
   const hasErrors = Object.values(errors).some((msg) => Boolean(msg));
-  const isSubmitDisabled = isPending || hasErrors;
+  const isSubmitDisabled = isPending || isEditing || hasErrors;
 
   const uploadRef = useRef<HTMLButtonElement | null>(null);
   const [uploadedUrl, setUploadedUrl] = useState("");
@@ -95,8 +95,8 @@ export default function Form({ currentUser, action }: FormProps) {
         >
           {({ open }) => {
             // @ts-ignore
-            uploadRef.current = open; // open() 보관
-            return null; // UI는 우리가 만든 버튼 사용
+            uploadRef.current = open;
+            return null;
           }}
         </CldUploadWidget>
       </div>

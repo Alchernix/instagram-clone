@@ -25,4 +25,22 @@ model User {
   createdAt DateTime @default(now())
   isDeleted Boolean @default(false)
   deletedAt DateTime?
+  posts Post[]
+}
+
+model Post {
+  id Int @id @default(autoincrement())
+  author User @relation(fields: [authorId], references: [id])
+  authorId Int
+  images PostImage[]
+  content String?
+  createdAt DateTime @default(now())
+}
+
+model PostImage {
+  id Int @id @default(autoincrement())
+  url String
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId Int
+  createdAt DateTime @default(now())
 }

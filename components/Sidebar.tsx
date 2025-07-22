@@ -11,7 +11,9 @@ import {
   SearchIcon,
   DirectIcon,
   HeartIcon,
+  PlusIcon,
 } from "./Icons";
+import ListItem from "./SidebarListItem";
 
 export default async function Sidebar() {
   const session = await auth();
@@ -43,6 +45,9 @@ export default async function Sidebar() {
         <ListItem icon={<SearchIcon />} label="검색" />
         <ListItem icon={<DirectIcon />} label="메시지" />
         <ListItem icon={<HeartIcon />} label="알림" />
+        <Link href="/posts/create">
+          <ListItem icon={<PlusIcon />} label="만들기" />
+        </Link>
         <Link href={`/${currentUser?.handle}`}>
           <ListItem
             icon={<ProfileImg url={currentUser?.profileImg!} size={24} />}
@@ -54,19 +59,5 @@ export default async function Sidebar() {
         <button>로그아웃</button>
       </form>
     </aside>
-  );
-}
-
-type ListItemProps = {
-  icon: React.ReactNode;
-  label: string;
-};
-
-function ListItem({ icon, label }: ListItemProps) {
-  return (
-    <li className="flex gap-3 justify-center md:justify-start items-center w-full hover:bg-slate-900 cursor-pointer rounded-md p-2">
-      {icon}
-      <p className="hidden md:block">{label}</p>
-    </li>
   );
 }
