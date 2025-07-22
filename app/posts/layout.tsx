@@ -11,8 +11,10 @@ export default async function Layout({
   return (
     <div className="h-full flex">
       {currentUserId && <Sidebar />}
-      <div className="flex-1 w-full max-w-3xl min-w-0 mx-auto py-10 px-5 overflow-auto">
-        {children}
+      <div className="flex-1 overflow-auto">
+        <div className="w-full max-w-3xl min-w-0 mx-auto py-10 px-5">
+          {children}
+        </div>
       </div>
     </div>
   );

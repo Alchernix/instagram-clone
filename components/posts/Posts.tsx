@@ -1,6 +1,7 @@
 import { getPostsbyUserHandle } from "@/server/actions/post";
 import { CameraWithCircleIcon } from "../Icons";
-import Post from "./Post";
+import Post from "./PostCard";
+import Link from "next/link";
 
 export async function Posts({ handle }: { handle: string }) {
   const posts = await getPostsbyUserHandle(handle);
@@ -9,7 +10,9 @@ export async function Posts({ handle }: { handle: string }) {
       {posts.length !== 0 && (
         <Container>
           {posts.map((post) => (
-            <Post key={post.id} url={post.images[0].url} />
+            <Link key={post.id} href={`/posts/${post.id}`}>
+              <Post url={post.images[0].url} />
+            </Link>
           ))}
         </Container>
       )}

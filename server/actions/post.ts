@@ -15,6 +15,27 @@ export async function getPostsbyUserHandle(handle: string) {
       include: {
         images: true,
       },
+      orderBy: {
+        id: "desc",
+      },
+    });
+    return result;
+  } catch (error) {
+    console.error("Failed to get posts");
+    throw new Error("Failed to get posts.");
+  }
+}
+
+export async function getPostByPostId(id: number) {
+  try {
+    const result = await prisma.post.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        images: true,
+        author: true,
+      },
     });
     return result;
   } catch (error) {

@@ -19,13 +19,13 @@ export default function ImageViewer({ images, size }: ImageViewerProps) {
     <div
       className={`w-full max-w-[${size}px] aspect-square overflow-hidden relative`}
     >
-      {images.length === 0 && (
-        <div className="bg-slate-700 w-full h-full"></div>
+      {!loaded[currentImage] && (
+        <div className="bg-(--loading) w-full h-full animate-pulse"></div>
       )}
       {images.length !== 0 && (
         <Image
           className={`w-full h-full object-cover ${
-            loaded[currentImage] ? "animate-pulse" : ""
+            loaded[currentImage] ? "" : "opacity-0"
           }`}
           src={images[currentImage]}
           alt="profile image"

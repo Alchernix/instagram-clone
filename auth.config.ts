@@ -16,7 +16,9 @@ export const authConfig = {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isOnProtectedPage =
-        nextUrl.pathname === "/" || nextUrl.pathname === "/accounts/edit";
+        nextUrl.pathname === "/" ||
+        nextUrl.pathname === "/accounts/edit" ||
+        nextUrl.pathname === "/posts/create";
       const isOnLoginPage =
         nextUrl.pathname === "/accounts/login" ||
         nextUrl.pathname === "/accounts/signup";
