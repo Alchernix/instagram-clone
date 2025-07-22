@@ -17,6 +17,24 @@ export async function getUserByHandle(handle: string) {
   }
 }
 
+// 게시글 수, 팔로우, 팔로워까지 가져오는 함수
+export async function getUserRelatedDataByHandle(handle: string) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { handle },
+      include: {
+        _count: {
+          select: { posts: true },
+        },
+      },
+    });
+    return user;
+  } catch (error) {
+    console.error("Failed to fetch user");
+    throw new Error("Failed to fetch user.");
+  }
+}
+
 export async function getUserById(id: number) {
   try {
     const user = await prisma.user.findUnique({

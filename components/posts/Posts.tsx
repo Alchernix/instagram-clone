@@ -4,14 +4,15 @@ import Post from "./Post";
 
 export async function Posts({ handle }: { handle: string }) {
   const posts = await getPostsbyUserHandle(handle);
-  console.log(posts);
   return (
     <>
-      <Container>
-        {posts.map((post) => (
-          <Post key={post.id} url={post.images[0].url} />
-        ))}
-      </Container>
+      {posts.length !== 0 && (
+        <Container>
+          {posts.map((post) => (
+            <Post key={post.id} url={post.images[0].url} />
+          ))}
+        </Container>
+      )}
       {posts.length === 0 && (
         <div className="flex-1 flex flex-col items-center justify-center gap-7">
           <CameraWithCircleIcon />
