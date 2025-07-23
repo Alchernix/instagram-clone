@@ -35,6 +35,7 @@ export async function getPostByPostId(id: number) {
       include: {
         images: true,
         author: true,
+        comments: true,
       },
     });
     return result;
@@ -54,9 +55,9 @@ export async function createPostAction(prevState: {}, formData: FormData) {
       .split(",")
       .map((image) => ({ url: image })) || [];
   const content = formData.get("content")?.toString() || "";
-
+  let result;
   try {
-    await prisma.post.create({
+    result = await prisma.post.create({
       data: {
         authorId: id,
         content,
@@ -69,7 +70,7 @@ export async function createPostAction(prevState: {}, formData: FormData) {
     console.error("Failed to create post");
     throw new Error("Failed to create post.");
   }
-  redirect("/");
+  redirect(`/posts/${result.id}`);
 }
 
 export async function updatePostAction(prevState: {}, formData: FormData) {

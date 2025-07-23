@@ -12,13 +12,12 @@ import {
 } from "../Icons";
 import { formatTime } from "@/lib/formatters";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import { useState } from "react";
 import Modal from "../Modal";
 import { ListItem } from "../Modal";
-import { deletePostAction } from "@/server/actions/post";
 
 type PostProps = {
+  currentUserId: Number;
   post: Post;
   images: PostImage[];
   author: User;
@@ -27,13 +26,17 @@ type PostProps = {
   };
 };
 
-export default function Post({ post, images, author, actions }: PostProps) {
+export default function Post({
+  currentUserId,
+  post,
+  images,
+  author,
+  actions,
+}: PostProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const session = useSession();
-  const currentUserId = Number(session?.data?.user?.id);
 
   return (
-    <div className="flex flex-col">
+    <>
       <div className="flex items-center gap-3 pb-3">
         <div className="w-[40px]">
           <Link href={`/${author.handle}`}>
@@ -53,7 +56,7 @@ export default function Post({ post, images, author, actions }: PostProps) {
             </div>
             <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
               <ul className="divide-y divide-slate-500">
-                <form action={deletePostAction}>
+                <form action={actions.deletePostAction}>
                   <input type="hidden" name="id" value={post.id} />
                   <input
                     type="hidden"
@@ -86,17 +89,7 @@ export default function Post({ post, images, author, actions }: PostProps) {
           <span className="font-bold">{author.handle}</span> {post.content}
         </pre>
       )}
-      <form action="" className="flex w-full">
-        <textarea
-          name="comment"
-          placeholder="댓글 달기..."
-          rows={1}
-          className="resize-none focus:outline-hidden flex-1 py-1"
-        ></textarea>
-        {/* 댓글 기능 구현하면 컴포넌트 분리 예정 */}
-        <button className="font-bold cursor-pointer px-2">게시</button>
-      </form>
-    </div>
+    </>
   );
 }
 

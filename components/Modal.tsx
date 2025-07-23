@@ -37,14 +37,13 @@ export default function Modal({
     };
   }, [open, onClose]);
 
-  return createPortal(
+  return (
     <dialog
       className="min-w-md fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl bg-slate-700 text-(--foreground) focus:outline-hidden"
       ref={dialog}
     >
       <div className="w-full h-full">{children}</div>
-    </dialog>,
-    document.querySelector("#modal-root")!
+    </dialog>
   );
 }
 

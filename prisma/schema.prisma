@@ -26,6 +26,7 @@ model User {
   isDeleted Boolean @default(false)
   deletedAt DateTime?
   posts Post[]
+  comments Comment[]
 }
 
 model Post {
@@ -35,6 +36,7 @@ model Post {
   images PostImage[]
   content String?
   createdAt DateTime @default(now())
+  comments Comment[]
 }
 
 model PostImage {
@@ -42,5 +44,18 @@ model PostImage {
   url String
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId Int
+  createdAt DateTime @default(now())
+}
+
+model Comment {
+  id Int @id @default(autoincrement())
+  author User @relation(fields: [authorId], references: [id])
+  authorId Int
+  post Post @relation(fields: [postId], references: [id])
+  postId Int
+  content String
+  parent Comment? @relation("CommentReplies", fields: [parentId], references: [id])
+  parentId Int?
+  replies Comment[] @relation("CommentReplies")
   createdAt DateTime @default(now())
 }

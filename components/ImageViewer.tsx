@@ -16,7 +16,15 @@ export default function ImageViewer({ images, size }: ImageViewerProps) {
   const [loaded, setLoaded] = useState<Boolean[]>([]);
 
   useEffect(() => {
-    setLoaded(images.map(() => false));
+    setLoaded(
+      images.map((image, idx) => {
+        if (loaded[idx]) {
+          return true;
+        } else {
+          return false;
+        }
+      })
+    );
   }, [images]);
 
   return (
