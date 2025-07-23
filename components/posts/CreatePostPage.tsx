@@ -30,8 +30,6 @@ export default function CreatePostPage({
   }, [uploadRef]);
 
   function handleSuccess(results: any) {
-    console.log(results.info.original_filename);
-    console.log(results.info.created_at);
     setUploadedImages((prevImages) => [...prevImages, results.info.url]);
   }
 
@@ -59,8 +57,8 @@ export default function CreatePostPage({
           action={formAction}
           className="flex-1 flex flex-col items-center gap-5"
         >
-          <div className={`w-full max-w-[400px] min-w-0`}>
-            <ImageViewer images={uploadedImages} size={400} />
+          <div className={`w-full max-w-[576px] min-w-0`}>
+            <ImageViewer images={uploadedImages} size={576} />
           </div>
           <textarea
             className="resize-none border border-(--border) w-full flex-1 rounded-md px-2 py-1"

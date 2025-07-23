@@ -3,35 +3,115 @@
 import type { User, Post, PostImage } from "@/app/generated/prisma";
 import { ProfileImg } from "../Images";
 import ImageViewer from "../ImageViewer";
-import { OptionsIcon } from "../Icons";
+import {
+  OptionsIcon,
+  HeartIcon,
+  CommentIcon,
+  DirectIcon,
+  BookMarkIcon,
+} from "../Icons";
+import { formatTime } from "@/lib/formatters";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
+import Modal from "../Modal";
+import { ListItem } from "../Modal";
+import { deletePostAction } from "@/server/actions/post";
 
 type PostProps = {
   post: Post;
   images: PostImage[];
   author: User;
+  actions: {
+    deletePostAction: (formData: FormData) => Promise<void>;
+  };
 };
 
-export default function Post({ post, images, author }: PostProps) {
+export default function Post({ post, images, author, actions }: PostProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const session = useSession();
+  const currentUserId = Number(session?.data?.user?.id);
+
   return (
     <div className="flex flex-col">
       <div className="flex items-center gap-3 pb-3">
         <div className="w-[40px]">
-          <ProfileImg url={author.profileImg} size={40} />
+          <Link href={`/${author.handle}`}>
+            <ProfileImg url={author.profileImg} size={40} />
+          </Link>
         </div>
-        <p className="font-bold">{author.handle}</p>
-        <div className="rotate-90 cursor-pointer ml-auto">
-          <OptionsIcon />
+        <div>
+          <Link href={`/${author.handle}`}>
+            <p className="font-bold">{author.handle}</p>
+          </Link>
+          <p className="text-(--light-text)">{formatTime(post.createdAt)}</p>
         </div>
+        {currentUserId === author.id && (
+          <div className="rotate-90 cursor-pointer ml-auto">
+            <div onClick={() => setIsModalOpen(true)}>
+              <OptionsIcon />
+            </div>
+            <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+              <ul className="divide-y divide-slate-500">
+                <form action={deletePostAction}>
+                  <input type="hidden" name="id" value={post.id} />
+                  <input
+                    type="hidden"
+                    name="history"
+                    value={`/${author.handle}`}
+                  />
+                  <ListItem className="text-red-500">삭제</ListItem>
+                </form>
+                <ListItem>수정</ListItem>
+                <ListItem onClick={() => setIsModalOpen(false)}>취소</ListItem>
+              </ul>
+            </Modal>
+          </div>
+        )}
       </div>
       <ImageViewer images={images.map((image) => image.url)} size={768} />
-      <div>Icons</div>
+      <div className="flex py-3 gap-4">
+        <IconContainer icon={<HeartIcon />} count={0} />
+        <IconContainer icon={<CommentIcon />} count={0} />
+        <IconContainer icon={<DirectIcon />} count={0} />
+        <IconContainer icon={<BookMarkIcon />} classes="ml-auto" />
+      </div>
       {post.content && (
-        <pre className="font-[inherit] text-inherit">
+        <pre className="font-[inherit] text-inherit pb-1">
           <span className="font-bold">{author.handle}</span> {post.content}
         </pre>
       )}
-      <div>0시간 전</div>
-      <textarea name="" placeholder="댓글 달기..."></textarea>
+      <form action="" className="flex w-full">
+        <textarea
+          name="comment"
+          placeholder="댓글 달기..."
+          rows={1}
+          className="resize-none focus:outline-hidden flex-1 py-1"
+        ></textarea>
+        {/* 댓글 기능 구현하면 컴포넌트 분리 예정 */}
+        <button className="font-bold cursor-pointer px-2">게시</button>
+      </form>
     </div>
+  );
+}
+
+type IconContainerProps = {
+  icon: React.ReactNode;
+  classes?: string;
+  count?: number | null;
+};
+
+function IconContainer({
+  icon,
+  classes = "",
+  count = null,
+}: IconContainerProps) {
+  return (
+    <button
+      className={`flex gap-1.5 items-center cursor-pointer hover:opacity-50 ${classes}`}
+    >
+      {icon}
+      {typeof count === "number" && <p className="font-bold">{count}</p>}
+    </button>
   );
 }

@@ -71,3 +71,21 @@ export async function createPostAction(prevState: {}, formData: FormData) {
   }
   redirect("/");
 }
+
+export async function deletePostAction(formData: FormData) {
+  const id = Number(formData.get("id"));
+  const history = formData.get("history")?.toString();
+  try {
+    await prisma.post.delete({
+      where: {
+        id,
+      },
+    });
+  } catch (error) {
+    console.error("Failed to delete post");
+    throw new Error("Failed to delete post.");
+  }
+  if (history) {
+    redirect(history);
+  }
+}
