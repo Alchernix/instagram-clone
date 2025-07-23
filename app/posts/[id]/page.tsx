@@ -3,8 +3,7 @@ import Post from "@/components/posts/Post";
 import { notFound } from "next/navigation";
 import { deletePostAction } from "@/server/actions/post";
 import { createCommentAction } from "@/server/actions/comment";
-import { CommentForm, Comments } from "@/components/comments/CommentSection";
-import type { CommentsWithInfo } from "@/server/actions/post";
+import { CommentSection } from "@/components/comments/CommentSection";
 import { auth } from "@/auth";
 
 export default async function Page({
@@ -29,19 +28,12 @@ export default async function Page({
         author={post?.author!}
         actions={{ deletePostAction }}
       />
-      {currentUserId && (
-        <CommentForm
-          currentUserId={currentUserId}
-          postId={postId}
-          action={createCommentAction}
-        />
-      )}
-      {!currentUserId && (
-        <p>
-          댓글을 남기려면 <span className="font-bold">로그인</span>
-        </p>
-      )}
-      <Comments comments={post?.comments!} />
+      <CommentSection
+        currentUserId={currentUserId}
+        postId={postId}
+        actions={{ createCommentAction }}
+        comments={post?.comments!}
+      />
     </div>
   );
 }

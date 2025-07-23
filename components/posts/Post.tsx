@@ -85,7 +85,7 @@ export default function Post({
         <IconContainer icon={<BookMarkIcon />} classes="ml-auto" />
       </div>
       {post.content && (
-        <pre className="font-[inherit] text-inherit pb-1">
+        <pre className="font-[inherit] text-inherit pb-2">
           <span className="font-bold">{author.handle}</span> {post.content}
         </pre>
       )}

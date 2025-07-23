@@ -10,6 +10,9 @@ export async function createCommentAction(
   const content = formData.get("content")?.toString()!;
   const authorId = Number(formData.get("author")?.toString())!;
   const postId = Number(formData.get("postId")?.toString());
+  const parentId = formData.get("parentId")
+    ? Number(formData.get("parentId")?.toString())
+    : null;
 
   try {
     await prisma.comment.create({
@@ -17,6 +20,7 @@ export async function createCommentAction(
         authorId,
         content,
         postId,
+        parentId,
       },
     });
   } catch (error) {

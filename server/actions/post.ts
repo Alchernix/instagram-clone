@@ -44,6 +44,16 @@ export async function getPostByPostId(id: number) {
                 profileImg: true,
               },
             },
+            replies: {
+              include: {
+                author: {
+                  select: {
+                    handle: true,
+                    profileImg: true,
+                  },
+                },
+              },
+            },
           },
         },
       },
@@ -61,6 +71,16 @@ export type CommentsWithInfo = Prisma.CommentGetPayload<{
       select: {
         handle: true;
         profileImg: true;
+      };
+    };
+    replies: {
+      include: {
+        author: {
+          select: {
+            handle: true;
+            profileImg: true;
+          };
+        };
       };
     };
   };
