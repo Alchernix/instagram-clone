@@ -30,6 +30,7 @@ export default function CreatePostPage({
   }, [uploadRef]);
 
   function handleSuccess(results: any) {
+    console.log("!");
     setUploadedImages((prevImages) => [...prevImages, results.info.url]);
   }
 

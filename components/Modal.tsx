@@ -50,12 +50,17 @@ export default function Modal({
 
 type ListItemProps = {
   children: React.ReactNode;
+  classes?: string;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-export function ListItem({ children, ...props }: ListItemProps) {
+export function ListItem({ children, classes = "", ...props }: ListItemProps) {
   return (
     <li className="py-2 cursor-pointer focus:outline-none text-base text-center hover:bg-slate-800">
-      <button {...props} autoFocus={false}>
+      <button
+        className={`w-full h-full focus:outline-none ${classes}`}
+        {...props}
+        autoFocus={false}
+      >
         {children}
       </button>
     </li>

@@ -60,9 +60,14 @@ export default function Post({ post, images, author, actions }: PostProps) {
                     name="history"
                     value={`/${author.handle}`}
                   />
-                  <ListItem className="text-red-500">삭제</ListItem>
+                  <ListItem classes="text-red-500">삭제</ListItem>
                 </form>
-                <ListItem>수정</ListItem>
+                <div>
+                  <Link href={`/posts/${post.id}/edit`} className="">
+                    <ListItem>수정</ListItem>
+                  </Link>
+                </div>
+
                 <ListItem onClick={() => setIsModalOpen(false)}>취소</ListItem>
               </ul>
             </Modal>

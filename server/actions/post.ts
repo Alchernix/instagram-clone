@@ -72,6 +72,25 @@ export async function createPostAction(prevState: {}, formData: FormData) {
   redirect("/");
 }
 
+export async function updatePostAction(prevState: {}, formData: FormData) {
+  const id = Number(formData.get("id"));
+  const content = formData.get("content")?.toString() || "";
+  try {
+    await prisma.post.update({
+      where: {
+        id,
+      },
+      data: {
+        content,
+      },
+    });
+  } catch (error) {
+    console.error("Failed to update post");
+    throw new Error("Failed to update post.");
+  }
+  redirect(`/posts/${id}`);
+}
+
 export async function deletePostAction(formData: FormData) {
   const id = Number(formData.get("id"));
   const history = formData.get("history")?.toString();
