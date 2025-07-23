@@ -80,7 +80,7 @@ export default function Post({
       <ImageViewer images={images.map((image) => image.url)} size={768} />
       <div className="flex py-3 gap-4">
         <IconContainer icon={<HeartIcon />} count={0} />
-        <IconContainer icon={<CommentIcon />} count={0} />
+        <IconContainer icon={<CommentIcon />} count={post.comments.length} />
         <IconContainer icon={<DirectIcon />} count={0} />
         <IconContainer icon={<BookMarkIcon />} classes="ml-auto" />
       </div>

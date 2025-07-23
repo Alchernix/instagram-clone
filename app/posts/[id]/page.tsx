@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { deletePostAction } from "@/server/actions/post";
 import { createCommentAction } from "@/server/actions/comment";
 import { CommentForm, Comments } from "@/components/comments/CommentSection";
+import type { CommentsWithInfo } from "@/server/actions/post";
 import { auth } from "@/auth";
 
 export default async function Page({

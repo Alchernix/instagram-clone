@@ -3,6 +3,7 @@
 import { prisma } from "@/server/db";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
+import { Prisma } from "@/app/generated/prisma";
 
 export async function getPostsbyUserHandle(handle: string) {
   try {
@@ -35,7 +36,16 @@ export async function getPostByPostId(id: number) {
       include: {
         images: true,
         author: true,
-        comments: true,
+        comments: {
+          include: {
+            author: {
+              select: {
+                handle: true,
+                profileImg: true,
+              },
+            },
+          },
+        },
       },
     });
     return result;
@@ -44,6 +54,17 @@ export async function getPostByPostId(id: number) {
     throw new Error("Failed to get posts.");
   }
 }
+
+export type CommentsWithInfo = Prisma.CommentGetPayload<{
+  include: {
+    author: {
+      select: {
+        handle: true;
+        profileImg: true;
+      };
+    };
+  };
+}>;
 
 export async function createPostAction(prevState: {}, formData: FormData) {
   const session = await auth();
