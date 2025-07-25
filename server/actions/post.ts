@@ -70,6 +70,36 @@ export async function getPostByPostId(id: number) {
   }
 }
 
+export type PostWithInfo = Prisma.PostGetPayload<{
+  include: {
+    images: true;
+    author: true;
+    comments: {
+      include: {
+        author: {
+          select: {
+            handle: true;
+            profileImg: true;
+          };
+        };
+      };
+    };
+    likes: {
+      where: {
+        userId: number;
+      };
+      select: {
+        id: true;
+      };
+    };
+    _count: {
+      select: {
+        likes: true;
+      };
+    };
+  };
+}>;
+
 export type CommentsWithInfo = Prisma.CommentGetPayload<{
   include: {
     author: {
