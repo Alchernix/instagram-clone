@@ -28,6 +28,8 @@ export async function getPostsbyUserHandle(handle: string) {
 }
 
 export async function getPostByPostId(id: number) {
+  const session = await auth();
+  const userId = Number(session?.user?.id);
   try {
     const result = await prisma.post.findUnique({
       where: {
@@ -44,6 +46,19 @@ export async function getPostByPostId(id: number) {
                 profileImg: true,
               },
             },
+          },
+        },
+        likes: {
+          where: {
+            userId,
+          },
+          select: {
+            id: true,
+          },
+        },
+        _count: {
+          select: {
+            likes: true,
           },
         },
       },

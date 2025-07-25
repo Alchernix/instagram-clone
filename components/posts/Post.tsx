@@ -9,21 +9,28 @@ import {
   CommentIcon,
   DirectIcon,
   BookMarkIcon,
+  ColoredHeartIcon,
 } from "../Icons";
 import { formatTime } from "@/lib/formatters";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useOptimistic } from "react";
+import { createLike, deleteLike } from "@/server/actions/like";
 import Modal from "../Modal";
 import { ListItem } from "../Modal";
 
 type PostProps = {
-  currentUserId: Number;
+  currentUserId: number;
   post: Post;
   images: PostImage[];
   author: User;
   actions: {
     deletePostAction: (formData: FormData) => Promise<void>;
   };
+};
+
+type LikeState = {
+  liked: boolean;
+  likeId: number | null;
 };
 
 export default function Post({
@@ -34,6 +41,30 @@ export default function Post({
   actions,
 }: PostProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [like, setLike] = useState<LikeState>({
+    liked: post.likes.length > 0,
+    likeId: post.likes[0]?.id,
+  });
+  const [likeCount, setLIkeCount] = useState(post._count.likes);
+  const [optimisticLike, setOptimisticLike] = useOptimistic(
+    like,
+    (state, newLike) => {
+      return { ...state, liked: !state.liked };
+    }
+  );
+
+  async function likeAction(formData: FormData) {
+    setOptimisticLike(like);
+    if (like.liked) {
+      await deleteLike(formData);
+      setLike({ liked: false, likeId: null });
+      setLIkeCount((prev: number) => prev - 1);
+    } else {
+      const likeId = await createLike(formData);
+      setLike({ liked: true, likeId: likeId });
+      setLIkeCount((prev: number) => prev + 1);
+    }
+  }
 
   return (
     <>
@@ -79,7 +110,22 @@ export default function Post({
       </div>
       <ImageViewer images={images.map((image) => image.url)} size={768} />
       <div className="flex py-3 gap-4">
-        <IconContainer icon={<HeartIcon />} count={0} />
+        <form action={likeAction}>
+          <input type="hidden" name="likeId" value={like.likeId || ""} />
+          <input type="hidden" name="postId" value={post.id} />
+          <input type="hidden" name="userId" value={currentUserId} />
+          <input type="hidden" name="targetUserId" value={author.id} />
+          <IconContainer
+            icon={
+              optimisticLike.liked || like.liked ? (
+                <ColoredHeartIcon />
+              ) : (
+                <HeartIcon />
+              )
+            }
+            count={likeCount}
+          />
+        </form>
         <IconContainer icon={<CommentIcon />} count={post.comments.length} />
         <IconContainer icon={<DirectIcon />} count={0} />
         <IconContainer icon={<BookMarkIcon />} classes="ml-auto" />
